@@ -1,7 +1,6 @@
 using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
@@ -9,6 +8,7 @@ using expenditure_tracker.Models;
 using expenditure_tracker.ViewModels;
 using expenditure_tracker.Views;
 using expenditure_tracker.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace expenditure_tracker;
 
@@ -24,6 +24,7 @@ public class App : Application
     public override async void OnFrameworkInitializationCompleted()
     {
         DbContext = new ExpenditureDbContext();
+        DbContext.Database.Migrate();
         
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

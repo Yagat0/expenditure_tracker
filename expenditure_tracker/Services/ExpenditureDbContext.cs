@@ -1,15 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using expenditure_tracker.Models;
+using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
 namespace expenditure_tracker.Services;
 
 public class ExpenditureDbContext : DbContext
 {
-    public DbSet<Expenditure> Expenditures { get; set; }
+    public Microsoft.EntityFrameworkCore.DbSet<Expenditure> Expenditures { get; set;  }
     public string DbPath { get; set; }
 
     public enum FilterOptions
@@ -74,6 +76,12 @@ public class ExpenditureDbContext : DbContext
         if (location != null) q = q.Where(e => e.Location == location);
         if (vendor != null) q = q.Where(e => e.Vendor == vendor);
         return q.ToList();
+    }
+
+    public async Task UpdateExpenditure(Expenditure expenditure)
+    {
+        Update(expenditure);
+        await SaveChangesAsync();
     }
     
     public async Task RemoveExpenditure(Expenditure expenditure)
