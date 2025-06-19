@@ -14,17 +14,17 @@ namespace expenditure_tracker;
 
 public class App : Application
 {
-    public ExpenditureDbContext DbContext;
-    
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
     }
 
-    public override async void OnFrameworkInitializationCompleted()
+    public override void OnFrameworkInitializationCompleted()
     {
-        DbContext = new ExpenditureDbContext();
-        DbContext.Database.Migrate();
+        using (var dbContext = new ExpenditureDbContext())
+        {
+            dbContext.Database.Migrate();
+        }
         
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

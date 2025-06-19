@@ -35,20 +35,22 @@ public class ExpenditureDbContext : DbContext
             .OwnsOne(e => e.Recurrence);
     }*/
     
-    public async Task AddExpenditure(Expenditure expenditure)
+    public static async Task AddExpenditure(Expenditure expenditure)
     {
-        Add(expenditure);
-        await SaveChangesAsync();
+        await using var dbContext = new ExpenditureDbContext();
+        dbContext.Expenditures.Add(expenditure);
+        await dbContext.SaveChangesAsync();
     }
     
-    public List<Expenditure> GetExpenditures(
+    public static List<Expenditure> GetExpenditures(
         DateTime? date = null, FilterOptions? dateFilter = null,
         string? category = null,
         double? amount = null, FilterOptions? amountFilter = null,
         PaymentMethod? paymentMethod = null, string? currency = null, 
         string? location = null, string? vendor = null)
     {
-        var q = Expenditures.AsQueryable();
+        using var dbContext = new ExpenditureDbContext();
+        var q = dbContext.Expenditures.AsQueryable();
 
         if (date.HasValue && dateFilter.HasValue)
         {
@@ -78,15 +80,27 @@ public class ExpenditureDbContext : DbContext
         return q.ToList();
     }
 
-    public async Task UpdateExpenditure(Expenditure expenditure)
+    public static async Task UpdateExpenditure(Expenditure expenditure)
     {
-        Update(expenditure);
-        await SaveChangesAsync();
+        await using var dbContext = new ExpenditureDbContext();
+        await dbContext.Expenditures
+            .Where(e => e.Id == expenditure.Id)
+            .ExecuteUpdateAsync(setters => setters
+                .SetProperty(b => b.Amount, expenditure.Amount)
+                .SetProperty(b => b.Category, expenditure.Category)
+                .SetProperty(b => b.Date, expenditure.Date)
+                .SetProperty(b => b.Currency, expenditure.Currency)
+                .SetProperty(b => b.Location, expenditure.Location)
+                .SetProperty(b => b.Note, expenditure.Note)
+                .SetProperty(b => b.PaymentMethod, expenditure.PaymentMethod)
+                .SetProperty(b => b.Vendor, expenditure.Vendor));
     }
     
-    public async Task RemoveExpenditure(Expenditure expenditure)
+    public static async Task RemoveExpenditure(Expenditure expenditure)
     {
-        Remove(expenditure);
-        await SaveChangesAsync();
+        await using var dbContext = new ExpenditureDbContext();
+        await dbContext.Expenditures
+            .Where(e => e.Id == expenditure.Id)
+            .ExecuteDeleteAsync();
     }
 }

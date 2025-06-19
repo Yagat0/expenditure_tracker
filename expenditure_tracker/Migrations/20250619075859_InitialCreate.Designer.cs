@@ -11,7 +11,7 @@ using expenditure_tracker.Services;
 namespace expenditure_tracker.Migrations
 {
     [DbContext(typeof(ExpenditureDbContext))]
-    [Migration("20250617110114_InitialCreate")]
+    [Migration("20250619075859_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
