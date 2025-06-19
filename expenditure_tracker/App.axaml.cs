@@ -4,7 +4,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
-using expenditure_tracker.Models;
 using expenditure_tracker.ViewModels;
 using expenditure_tracker.Views;
 using expenditure_tracker.Services;

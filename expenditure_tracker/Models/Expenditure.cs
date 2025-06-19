@@ -1,28 +1,20 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace expenditure_tracker.Models;
 
 public enum PaymentMethod { Card, Cash, BankTransfer };
 
-/* TODO: Fix recurrence parameter
-public enum Period { Daily, Weekly, Monthly, Yearly };
+public enum Period { Daily, Weekly, Monthly, Yearly, Never };
 
-[Owned]
-public class Recurrence
+[ComplexType]
+public class Recurrence(bool isRecurring = false, Period period = Period.Never, int interval = 0)
 {
-    bool _isRecurring;
-    Period _period;
-    int _interval;
-
-    public Recurrence(bool isRecurring, Period period, int interval)
-    {
-        _isRecurring = isRecurring;
-        _period = period;
-        _interval = interval;
-    }
-}*/
+    public bool IsRecurring = isRecurring;
+    public Period Period = period;
+    public int Interval = interval;
+}
 
 public class Expenditure
 {
@@ -38,7 +30,7 @@ public class Expenditure
     public string? Note { get; set; }
     public DateTime? Date { get; set; }
     public PaymentMethod? PaymentMethod { get; set; }
-    //public Recurrence? Recurrence { get; set; }
+    public Recurrence? Recurrence { get; set; }
     public string? Currency { get; set; }
     public string? Location { get; set; }
     public string? Vendor { get; set; }

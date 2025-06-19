@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using expenditure_tracker.Models;
-using DbContext = Microsoft.EntityFrameworkCore.DbContext;
+//using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
 namespace expenditure_tracker.Services;
 
 public class ExpenditureDbContext : DbContext
 {
-    public Microsoft.EntityFrameworkCore.DbSet<Expenditure> Expenditures { get; set;  }
+    public DbSet<Expenditure> Expenditures { get; set;  }
     public string DbPath { get; set; }
 
     public enum FilterOptions
@@ -29,11 +28,15 @@ public class ExpenditureDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={DbPath}");
 
-    /*protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Expenditure>()
-            .OwnsOne(e => e.Recurrence);
-    }*/
+        modelBuilder.Entity<Expenditure>(x =>
+        {
+            x.ComplexProperty(y => y.Recurrence,
+                y => { y.IsRequired(); });
+        });
+        base.OnModelCreating(modelBuilder);
+    }
     
     public static async Task AddExpenditure(Expenditure expenditure)
     {
