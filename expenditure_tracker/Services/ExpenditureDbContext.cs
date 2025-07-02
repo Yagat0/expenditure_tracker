@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using expenditure_tracker.Models;
-//using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
 namespace expenditure_tracker.Services;
 
