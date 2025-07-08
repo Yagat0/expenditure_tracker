@@ -7,15 +7,59 @@
         x:Class="expenditure_tracker.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="expenditure_tracker">
+        MinHeight="480" 
+        MinWidth="854"
+        Title="Expenditure Tracker">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-
-    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Welcome to expenditure tracker!</TextBlock>
     
-
+    <Grid ShowGridLines="True" ColumnDefinitions="10*, *" RowDefinitions="*,3*,Auto">
+        <WrapPanel Orientation="Vertical"  HorizontalAlignment="Stretch" 
+                   Margin="10" ItemSpacing="8">
+            <StackPanel Orientation="Horizontal" Spacing="5">
+                <Label>Amount:</Label>
+                <ComboBox></ComboBox> <!-- More than:|Less than:|Equal to: !-->
+                <NumericUpDown></NumericUpDown>
+            </StackPanel> 
+            
+            <StackPanel Orientation="Horizontal" Spacing="5">
+                <Label>Category:</Label>
+                <ComboBox></ComboBox> <!-- Inserted categories !-->
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Spacing="5">
+                <Label>Date:</Label>
+                <ComboBox></ComboBox> <!-- Before|After|On !-->
+                <CalendarDatePicker></CalendarDatePicker>
+            </StackPanel>   
+            
+            <StackPanel Orientation="Horizontal" Spacing="5">
+                <Label>Payment method:</Label> <!-- Cash|Card|Bank !-->
+                <ComboBox></ComboBox>
+            </StackPanel>   
+            
+            <StackPanel Orientation="Horizontal" Spacing="5">
+                <Label>Currency:</Label> <!-- Inserted currencies !-->
+                <ComboBox></ComboBox>
+            </StackPanel>   
+        </WrapPanel>
+        
+        <DataGrid Grid.Row="1" Grid.Column="0" ItemsSource="{Binding ExpendituresDg}" 
+                  AutoGenerateColumns="True" IsReadOnly="True" 
+                  GridLinesVisibility="All"
+                  BorderThickness="1" BorderBrush="Gray">
+        </DataGrid>
+        
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Spacing="10">
+            <Button Content="Add"></Button>
+            <Button Content="Edit"></Button>
+            <Button Content="Remove"></Button>
+        </StackPanel>
+    </Grid>
 </Window>

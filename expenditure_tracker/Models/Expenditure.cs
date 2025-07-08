@@ -34,4 +34,21 @@ public class Expenditure
     public string? Currency { get; set; }
     public string? Location { get; set; }
     public string? Vendor { get; set; }
+
+    public Expenditure(double amount, string? category = null,
+        string? note = null, DateTime? date = null, 
+        PaymentMethod? paymentMethod = null,
+        Recurrence? recurrence = null, string? currency = null)
+    {
+        Amount = amount;
+        Category = category;
+        Note = note;
+        Date = date;
+        PaymentMethod = paymentMethod;
+        Recurrence = recurrence;
+        Currency = currency;
+    }
+
+    // needed for EF
+    public Expenditure() { }
 }

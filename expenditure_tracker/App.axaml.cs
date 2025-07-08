@@ -24,7 +24,7 @@ public class App : Application
         {
             dbContext.Database.Migrate();
         }
-        
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
