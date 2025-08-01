@@ -7,7 +7,7 @@
         x:Class="expenditure_tracker.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        MinHeight="480" 
+        MinHeight="650" 
         MinWidth="854"
         Title="Expenditure Tracker">
 
@@ -45,7 +45,17 @@
             <StackPanel Orientation="Horizontal" Spacing="5">
                 <Label>Currency:</Label> <!-- Inserted currencies !-->
                 <ComboBox></ComboBox>
-            </StackPanel>   
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Spacing="5">
+                <Label>Location:</Label>
+                <ComboBox></ComboBox> <!-- Inserted Locations !-->
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Spacing="5">
+                <Label>Vendor:</Label>
+                <ComboBox></ComboBox> <!-- Inserted Vendors !-->
+            </StackPanel>
         </WrapPanel>
         
         <DataGrid Grid.Row="1" Grid.Column="0" ItemsSource="{Binding ExpendituresDg}" 
@@ -57,9 +67,65 @@
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" 
                     HorizontalAlignment="Center" VerticalAlignment="Center" 
                     Spacing="10">
-            <Button Content="Add"></Button>
-            <Button Content="Edit"></Button>
+            <Button Content="Add" Command="{Binding MenuAddVisibleCommand}"></Button>
+            <Button Content="Edit" Command="{Binding MenuEditVisibleCommand}"></Button>
             <Button Content="Remove"></Button>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical" MaxHeight="150" 
+                    IsVisible="{Binding IsMenuVisible, Mode=OneWay}">
+            <WrapPanel  HorizontalAlignment="Stretch" 
+                    Margin="10" ItemSpacing="8">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <Label>Amount:</Label>
+                    <NumericUpDown></NumericUpDown>
+                </StackPanel> 
+            
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <Label>Category:</Label>
+                    <TextBox></TextBox>
+                </StackPanel> 
+            
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <Label>Date:</Label>
+                    <CalendarDatePicker></CalendarDatePicker>
+                </StackPanel> 
+            
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <Label>Payment method:</Label>
+                    <ComboBox></ComboBox>
+                </StackPanel>
+            
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <Label>Note:</Label>
+                    <TextBox></TextBox>
+                </StackPanel>
+            
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <Label>Recurrence:</Label>
+                    <ComboBox></ComboBox>
+                </StackPanel>
+            
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <Label>Currency:</Label>
+                    <TextBox MaxLength="6"></TextBox>
+                </StackPanel>
+            
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <Label>Location:</Label>
+                    <TextBox></TextBox>
+                </StackPanel>
+            
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <Label>Vendor:</Label>
+                    <TextBox></TextBox>
+                </StackPanel>
+            </WrapPanel>
+            
+            <StackPanel Orientation="Horizontal" Margin="8" Spacing="8" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Button Content="Cancel" Command="{Binding MenuCancelCommand}"></Button>
+                <Button Content="Save" Command="{Binding MenuSaveCommand}"></Button>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
